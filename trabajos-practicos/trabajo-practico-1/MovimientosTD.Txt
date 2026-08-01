@@ -1,0 +1,17 @@
+ 5- 3-2026 Casa de Pastas La Juvenil          38412.25 1
+12- 3-2026 Pescaderia El Pez Cado             10649.09 1
+15- 3-2026 Supermercado Kotto                 25632.94 1
+29- 3-2026 Libreria Alfa-Omega                 9782.67 1
+ 3- 3-2026 Farmacia Del Centro                 8450.30 2
+11- 3-2026 Estacion Servicio Shell            32780.55 2
+22- 3-2026 Verduleria La Huerta                6320.40 2
+ 7- 3-2026 Perfumeria Rouge                   14990.00 3
+18- 3-2026 Panaderia Buen Dia                  4780.25 3
+27- 3-2026 Cine Monumental                    12500.00 3
+ 2- 3-2026 Rotiseria Don Pepe                  7650.80 4
+14- 3-2026 Kiosco Las 5 Esquinas               3250.00 4
+25- 3-2026 Heladeria Vittorio                  9100.45 4
+ 6- 3-2026 Ferreteria Black Decker            45320.90 5
+16- 3-2026 Optica Vision Total                78400.00 5
+24- 3-2026 Vinoteca El Descorche              23150.75 5
+30- 3-2026 Bazar La Fortuna                   18600.00 5

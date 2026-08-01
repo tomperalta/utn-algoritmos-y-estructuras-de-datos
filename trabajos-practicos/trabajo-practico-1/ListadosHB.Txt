@@ -1,0 +1,111 @@
+==========================================================================
+  HOME BANKING MESOPOTAMIA  -  Sucursal 009
+  LISTADOS DEL USUARIO
+  Emitido el Sabado 01-08-2026 a las 08:43:56 hs.
+  Usuario: ALVAREZ MARIA SOLEDAD   (nro. 1)
+  Archivo: ListadosHB.Txt
+==========================================================================
+
+--------------------------------------------------------------------------
+  1. LISTADO DE DATOS PERSONALES
+--------------------------------------------------------------------------
+
+  Nro. de usuario...........: 1
+  DNI.......................: 30125478
+  Apellido y Nombre.........: ALVAREZ MARIA SOLEDAD
+  Fecha de nacimiento.......: 14-03-1983
+  Usuario...................: malvarez
+  Nro. de celular...........: 3414785296
+  Correo electronico........: malvarez@correo.com
+  Domicilio.................: Av. Pellegrini 1450 - Rosario
+  Nro. Cta. Caja Ahorro.....: 106-4235689707-3
+  CBU.......................: 1060099920000423568970
+
+--------------------------------------------------------------------------
+  2. LISTADO DE CUENTAS
+--------------------------------------------------------------------------
+
+  Nro. Cuenta         Tipo  Moneda             Saldo  Estado    
+  --------------------------------------------------------------
+  106-4235689707-3    CA    $             2581396.04  Activa    
+  106-4235689707-U    CA    u$s              4820.55  Activa    
+
+  Cantidad de cuentas: 2
+
+--------------------------------------------------------------------------
+  3. LISTADO DE CUENTAS AGENDADAS (por alias)
+--------------------------------------------------------------------------
+
+   Nro.  Alias               Titular                     CBU                     
+  -------------------------------------------------------------------------------
+      1  alquiler.depto      SOSA INMOBILIARIA SRL       0720099950000078912345  
+      2  gas.litoral         LITORAL GAS S.A.            0170099940000012345678  
+      3  juan.perez          PEREZ JUAN MANUEL           0290099910000098765432  
+      4  mama                ALVAREZ ELSA NOEMI          1910099930000045678912  
+
+  Cantidad de cuentas agendadas: 4
+
+--------------------------------------------------------------------------
+  4. MOVIMIENTOS DE LA CAJA DE AHORRO (por fecha)
+--------------------------------------------------------------------------
+
+  Cta.CA:  106-4235689707-3
+  Saldo inicial $    1250000.00
+
+  Fecha      T Detalle                           Debe        Haber         Saldo
+  ------------------------------------------------------------------------------
+   1- 4-2026 D Sueldo Marzo 2026           1542367.21                 2792367.21
+   1- 4-2026 H Combustible YPF                            35983.68    2756383.53
+   3- 4-2026 H Kiosco Las 5 Esquinas                       8952.03    2747431.50
+  10- 4-2026 D Transferencia por Serv.      156236.40                 2903667.90
+  11- 4-2026 H Restaurant Siga la Vaca                    76591.31    2827076.59
+  15- 4-2026 H Pago Tarjeta de Credito                   245680.55    2581396.04
+  ------------------------------------------------------------------------------
+               Totales                     1698603.61    367207.57    2581396.04
+
+  Cantidad de movimientos: 6
+
+--------------------------------------------------------------------------
+  5. MOVIMIENTOS DE TARJETA DE DEBITO (por fecha)
+--------------------------------------------------------------------------
+
+  Fecha      Comercio                             Importe
+  -------------------------------------------------------
+   5- 3-2026 Casa de Pastas La Juvenil           38412.25
+  12- 3-2026 Pescaderia El Pez Cado              10649.09
+  15- 3-2026 Supermercado Kotto                  25632.94
+  29- 3-2026 Libreria Alfa-Omega                  9782.67
+  -------------------------------------------------------
+                                      Total      84476.95
+
+  Cantidad de consumos: 4
+
+--------------------------------------------------------------------------
+  6. MOVIMIENTOS DE TARJETA DE CREDITO (por fecha)
+--------------------------------------------------------------------------
+
+  Fecha      Comercio                       Cuotas Nro.Cpbte.       Importe
+  -------------------------------------------------------------------------
+   3- 2-2026 Pizzeria Kentucky                 1/3     245684      29567.73
+  14- 2-2026 Panaderia Buen Dia                                    58323.84
+  19- 2-2026 Combustible YPF                            37485      36491.09
+  26- 2-2026 Kit Herramientas Black            2/3     162395      85440.25
+  -------------------------------------------------------------------------
+                                                        Total     209822.91
+
+  Cantidad de consumos: 4
+
+--------------------------------------------------------------------------
+  7. RESUMEN FINAL
+--------------------------------------------------------------------------
+
+  Saldo Caja de Ahorro $....:       2581396.04
+  Saldo en dolares u$s......:          4820.55
+  Consumido Tarj. Debito....:         84476.95
+  Consumido Tarj. Credito...:        209822.91
+  TOTAL consumido tarjetas..:        294299.86
+
+==========================================================================
+  Registros emitidos en este listado: 20
+  FIN DE LOS LISTADOS
+==========================================================================

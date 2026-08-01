@@ -184,8 +184,22 @@ void ejercicio13(vector<int> lista, int x) {
   if (estaEnLaLista) {
     cout << "El elemento " << x << " se encuentra en la lista " << ", en la posición " << posicion << "." << endl;
   } else {
-    cout << "El elemento" << x << " no se encuentra en la lista." << endl;
+    cout << "El elemento " << x << " no se encuentra en la lista." << endl;
   }
+}
+
+/**
+ * EJERCICIO 14
+ * De cada participante del Rally Paris-Dakar se conocen, al finalizar una etapa, los siguientes datos:
+ * - Código (0: fin del proceso, 1: auto, 2: camión, 3: moto)
+ * - Número del vehículo
+ * - Apellido y nombre del piloto y del copiloto
+ * - Nombre de la escudería
+ * - Tiempo utilizado
+ * Se debe informar, para cada tipo de vehículo, los datos del ganador.
+ */
+void ejercicio14() {
+
 }
 
 
@@ -202,7 +216,10 @@ int main() {
 
   // ejercicio5();
 
-  ejercicio13({1, 2, 3 ,4}, 2);
+  // ejercicio13({1, 2, 3 ,4}, 2);
+  // ejercicio13({1, 2, 3 ,4}, 5);
+
+  ejercicio14();
 
   return 0;
 }

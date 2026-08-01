@@ -1,0 +1,17 @@
+ 3- 2-2026 Pizzeria Kentucky                1/3   245684     29567.73 1
+14- 2-2026 Panaderia Buen Dia                                58323.84 1
+19- 2-2026 Combustible YPF                         37485     36491.09 1
+26- 2-2026 Kit Herramientas Black           2/3   162395     85440.25 1
+ 5- 2-2026 Indumentaria Zara                3/6   118420     64200.00 2
+17- 2-2026 Farmacia Del Centro              1/1   220145     18750.30 2
+28- 2-2026 Electro Hogar Sur               6/12   305471    152300.90 2
+ 8- 2-2026 Libreria Alfa-Omega              1/3   411256     27600.45 3
+20- 2-2026 Cine Monumental                                   12500.00 3
+25- 2-2026 Viaje Aerolineas                4/12   508233    348900.00 3
+ 2- 2-2026 Supermercado Kotto               2/3   601478     45300.20 4
+13- 2-2026 Deportes Full Sport              1/6   617392     89750.60 4
+23- 2-2026 Rotiseria Don Pepe                                 7650.80 4
+ 4- 2-2026 Optica Vision Total             3/12   702584     78400.00 5
+11- 2-2026 Vinoteca El Descorche            1/3   715039     23150.75 5
+19- 2-2026 Neumaticos Fate                 6/18   728461    312450.55 5
+27- 2-2026 Bazar La Fortuna                                  18600.00 5
