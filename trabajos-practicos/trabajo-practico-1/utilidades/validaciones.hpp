@@ -22,7 +22,7 @@ namespace Validar {
 
   const short LARGO_BUFFER = 200;
 
-  // La bandera <<entradaAgotada>> se define en compatibilidad.hpp, porque
+  // La bandera <<entradaAgotada>> se define en sistema.hpp, porque
   // tambien la necesita el modulo de consola.
   bool EntradaAgotada() {
     return entradaAgotada;

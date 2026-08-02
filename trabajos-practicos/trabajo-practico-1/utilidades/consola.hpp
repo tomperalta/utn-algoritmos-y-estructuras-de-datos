@@ -1,12 +1,12 @@
 // ---------------------------------------------------------------------------
 // consola.hpp
-// Version portable de los modulos de consola entregados por la catedra en
-// ModulosHB.cpp (el original se conserva sin modificar en lib/lib.cpp).
+// Modulos de consola, basados en los que entrego la catedra en ModulosHB.cpp
+// (el original se conserva sin modificar en lib/lib.cpp).
 //
 // Se respetan los nombres y la semantica de las funciones de la catedra
 // (_gotoxy, _textcolor, _clrscr, _clreol, MnsgBox, Marco, OcultarCursor,
-// MostrarCursor, MenuNavegar, ...) pero cada una tiene dos implementaciones:
-// la de Windows con <windows.h> y la de macOS/Linux con secuencias ANSI.
+// MostrarCursor, MenuNavegar, ...), implementadas con la API de consola de
+// Windows: SetConsoleTextAttribute, SetConsoleCursorPosition y demas.
 //
 // Modo texto plano
 // ----------------
@@ -29,15 +29,11 @@ namespace Screen {
   const short TECLA_FIN    = -14; // fin de la entrada (EOF)
 
   // ----- Estado interno del modulo -----
-  bool  modoTextoPlano = false;   // true -> sin ANSI ni posicionamiento
+  bool  modoTextoPlano = false;   // true -> sin color ni posicionamiento
   short colorTextoAct  = BLANCO;
   short colorFondoAct  = NEGRO;
   short posX = 1, posY = 1;       // posicion del cursor que se lleva en cuenta
   short filaTexto = 0;            // ultima fila emitida en modo texto plano
-
-  // Traduccion de los 16 colores de Windows a codigos ANSI de texto.
-  const short ANSI_TEXTO[16] = {30, 34, 32, 36, 31, 35, 33, 37,
-                                90, 94, 92, 96, 91, 95, 93, 97};
 
   // -------------------------------------------------------------------------
   // Activa o desactiva el modo texto plano.
@@ -59,13 +55,8 @@ namespace Screen {
     colorFondoAct = colBack;
     if (modoTextoPlano)
       return;
-#ifdef _WIN32
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),
                             colText + 16 * colBack);
-#else
-    cout << "\033[" << ANSI_TEXTO[colText % 16] << ';'
-         << ANSI_TEXTO[colBack % 16] + 10 << 'm';
-#endif
   } // setConsoleColor
 
   void ActualizaColores(short colText, short colBack) {
@@ -106,14 +97,11 @@ namespace Screen {
     }
     posX = x;
     posY = y;
-#ifdef _WIN32
+
     COORD coord;
-    coord.X = x - 1;
-    coord.Y = y - 1;
+    coord.X = (SHORT)(x - 1);
+    coord.Y = (SHORT)(y - 1);
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-#else
-    cout << "\033[" << y << ';' << x << 'H';
-#endif
   } // _gotoxy
 
   int _wherex() {
@@ -125,9 +113,9 @@ namespace Screen {
   } // _wherey
 
   // -------------------------------------------------------------------------
-  // Establece los limites logicos de la ventana de trabajo. La version
-  // portable solo registra los limites: se conserva por compatibilidad con la
-  // funcion window() de la catedra.
+  // Establece los limites logicos de la ventana de trabajo. Solo registra
+  // los limites: se conserva para respetar la interfaz de la funcion window()
+  // de la catedra.
   // -------------------------------------------------------------------------
   short venIzq = 1, venSup = 1, venDer = ANCHO_PANT, venInf = ALTO_PANT;
 
@@ -149,19 +137,16 @@ namespace Screen {
       posY = 1;
       return;
     }
-#ifdef _WIN32
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    HANDLE                     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_SCREEN_BUFFER_INFO csbi;
-    DWORD escritos;
-    COORD origen = {0, 0};
+    DWORD                      escritos;
+    COORD                      origen = {0, 0};
+
     GetConsoleScreenBufferInfo(hConsole, &csbi);
-    DWORD celdas = csbi.dwSize.X * csbi.dwSize.Y;
-    WORD atributo = colorTextoAct | (colorFondoAct << 4);
+    DWORD celdas = (DWORD)(csbi.dwSize.X * csbi.dwSize.Y);
+    WORD  atributo = (WORD)(colorTextoAct | (colorFondoAct << 4));
     FillConsoleOutputCharacter(hConsole, ' ', celdas, origen, &escritos);
     FillConsoleOutputAttribute(hConsole, atributo, celdas, origen, &escritos);
-#else
-    cout << "\033[2J";
-#endif
     _gotoxy(1, 1);
   } // _clrscr
 
@@ -171,56 +156,44 @@ namespace Screen {
   void _clreol() {
     if (modoTextoPlano)
       return;
-#ifdef _WIN32
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    HANDLE                     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_SCREEN_BUFFER_INFO csbi;
-    DWORD escritos;
+    DWORD                      escritos;
+
     GetConsoleScreenBufferInfo(hConsole, &csbi);
     COORD desde = csbi.dwCursorPosition;
-    FillConsoleOutputCharacter(hConsole, ' ', csbi.dwSize.X - desde.X, desde,
+    FillConsoleOutputCharacter(hConsole, ' ',
+                               (DWORD)(csbi.dwSize.X - desde.X), desde,
                                &escritos);
     SetConsoleCursorPosition(hConsole, desde);
-#else
-    cout << "\033[K";
-#endif
   } // _clreol
 
   void OcultarCursor() {
     if (modoTextoPlano)
       return;
-#ifdef _WIN32
     CONSOLE_CURSOR_INFO info;
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    HANDLE              hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
     GetConsoleCursorInfo(hConsole, &info);
     info.bVisible = FALSE;
     SetConsoleCursorInfo(hConsole, &info);
-#else
-    cout << "\033[?25l";
-#endif
   } // OcultarCursor
 
   void MostrarCursor() {
     if (modoTextoPlano)
       return;
-#ifdef _WIN32
     CONSOLE_CURSOR_INFO info;
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    HANDLE              hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
     GetConsoleCursorInfo(hConsole, &info);
     info.bVisible = TRUE;
     SetConsoleCursorInfo(hConsole, &info);
-#else
-    cout << "\033[?25h";
-#endif
   } // MostrarCursor
 
   void BarraTitulo(const char titulo[]) {
     if (modoTextoPlano)
       return;
-#ifdef _WIN32
     SetConsoleTitleA(titulo);
-#else
-    cout << "\033]0;" << titulo << "\007";
-#endif
   } // BarraTitulo
 
   // -------------------------------------------------------------------------
@@ -360,22 +333,14 @@ namespace Screen {
 
     if (cant == 0)
       return TECLA_FIN;
-#ifdef _WIN32
-    // En Windows las teclas extendidas llegan como un prefijo 0 o 224 seguido
-    // del codigo de la tecla.
+
+    // Las teclas extendidas llegan como un prefijo 0 o 224 seguido del codigo
+    // de la tecla: 72 es la flecha ARRIBA y 80 la flecha ABAJO.
     if (cant == 2 and (codigos[0] == 0 or codigos[0] == 224)) {
       if (codigos[1] == 72) return TECLA_ARRIBA;
       if (codigos[1] == 80) return TECLA_ABAJO;
       return 0;
     }
-#else
-    // En macOS/Linux llegan como la secuencia ESC [ A  /  ESC [ B.
-    if (cant == 3 and codigos[0] == 27 and codigos[1] == '[') {
-      if (codigos[2] == 'A') return TECLA_ARRIBA;
-      if (codigos[2] == 'B') return TECLA_ABAJO;
-      return 0;
-    }
-#endif
     if (codigos[0] == 27) return TECLA_ESCAPE;
     if (codigos[0] == 13 or codigos[0] == 10) return TECLA_ENTER;
     return (short) codigos[0];

@@ -75,7 +75,7 @@ const char ARCH_MOV_TC[]   = "MovimientosTC.Txt";
 const char ARCH_LISTADOS[] = "ListadosHB.Txt";
 
 // ---------------------------------------------------------------------------
-// Colores de la consola (codigos de 4 bits de Windows, emulados en POSIX).
+// Colores de la consola (codigos de 4 bits de la API de Windows).
 // Se define la paleta completa aunque el sistema no use todos los colores:
 // son los 16 valores que admiten las funciones de consola de la catedra.
 // ---------------------------------------------------------------------------

@@ -21,9 +21,11 @@
 //     quiere leer o actualizar (nroReg * largoRegistro) y se posiciona el
 //     puntero del archivo con seekg()/seekp() (LeerRegistro*, ActualizarRegistro*).
 //
-// Los archivos se abren siempre en modo binario y el salto de linea se escribe
-// en forma explicita, de manera que el largo del registro sea el mismo en
-// Windows y en macOS/Linux. Al leer se tolera igualmente el par CR+LF.
+// Los archivos se abren siempre en MODO BINARIO y el salto de linea se escribe
+// en forma explicita. Abrirlos en modo texto haria que la biblioteca tradujera
+// CR+LF por LF al leer, con lo cual las posiciones logicas dejarian de
+// coincidir con las fisicas y el ACCESO ALEATORIO caeria en el registro
+// equivocado. Al leer se toleran los dos terminadores posibles.
 // ---------------------------------------------------------------------------
 #ifndef ARCHIVOS_HPP
 #define ARCHIVOS_HPP
@@ -67,12 +69,6 @@ namespace Archivo {
   } // Existe
 
   // -------------------------------------------------------------------------
-  // Largo real de un registro del archivo, EN BYTES, incluido el salto de
-  // linea. Se determina leyendo hasta el primer '\n', de modo que funciona
-  // tanto si el archivo usa LF (macOS/Linux) como CR+LF (Windows).
-  // Devuelve 0 si el archivo no existe o esta vacio.
-  // -------------------------------------------------------------------------
-  // -------------------------------------------------------------------------
   // Largo en bytes que deben tener los DATOS de un registro de cada archivo,
   // sin contar el salto de linea.
   // -------------------------------------------------------------------------
@@ -83,6 +79,12 @@ namespace Archivo {
     return 0;
   } // LargoDatosDe
 
+  // -------------------------------------------------------------------------
+  // Largo real de un registro del archivo, EN BYTES, incluido el salto de
+  // linea. Se determina leyendo hasta el primer '\n', de modo que funciona
+  // tanto si el archivo termina las lineas con CR+LF como con LF solo.
+  // Devuelve 0 si el archivo no existe, esta vacio o no respeta el formato.
+  // -------------------------------------------------------------------------
   long LargoRegistro(const char nombreArch[]) {
     ifstream arch(nombreArch, ios::in | ios::binary);
 
@@ -112,24 +114,35 @@ namespace Archivo {
     return largo;
   } // LargoRegistro
 
+  // Terminador con el que se crean los archivos nuevos. En Windows el salto de
+  // linea de un archivo de texto es CR+LF, que es lo que espera ver cualquier
+  // editor -el Bloc de notas entre ellos- al abrir la muestra de datos.
+  const char TERMINADOR_NUEVO[] = "\r\n";
+
   // -------------------------------------------------------------------------
-  // Terminador de linea con el que fue escrito el archivo: CR+LF si se lo creo
-  // con un editor de Windows, LF en cualquier otro caso. Las componentes
-  // nuevas se agregan con el MISMO terminador, para que todos los registros
-  // sigan ocupando la misma cantidad de bytes.
+  // Terminador de linea con el que fue escrito el archivo. Se lo determina
+  // leyendo la primera linea, en lugar de darlo por sentado: la muestra de
+  // datos se prepara con un editor de texto plano, y no todos los editores
+  // graban CR+LF. Las componentes nuevas se agregan con el MISMO terminador
+  // que ya tiene el archivo, para que todos los registros sigan ocupando la
+  // misma cantidad de bytes y el acceso aleatorio siga siendo exacto.
+  //
+  // Si el archivo no existe todavia, se devuelve el terminador de Windows.
   // -------------------------------------------------------------------------
   void TerminadorDeLinea(const char nombreArch[], char terminador[]) {
     ifstream arch(nombreArch, ios::in | ios::binary);
     char     anterior = '\0', car;
 
-    strcpy(terminador, "\n");
+    strcpy(terminador, TERMINADOR_NUEVO);
     if (not arch.is_open())
       return;
-    while (arch.get(car)) {
+
+    bool hallado = false;
+
+    while (not hallado and arch.get(car)) {
       if (car == '\n') {
-        if (anterior == '\r')
-          strcpy(terminador, "\r\n");
-        break;
+        strcpy(terminador, anterior == '\r' ? "\r\n" : "\n");
+        hallado = true;
       }
       anterior = car;
     }

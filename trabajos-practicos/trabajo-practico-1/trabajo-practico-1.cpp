@@ -33,23 +33,22 @@
 // Paradigma: imperativo procedural, programacion estructurada y modular.
 // Memoria dinamica utilizada: 0 bytes (solo arrays y registros estaticos).
 //
-// Compiladores verificados
-// ------------------------
-//   Windows : GNU-GCC TDM-GCC-64  x86_64-w64-mingw32-g++.exe  (Code::Blocks)
-//   macOS   : clang++ -std=c++17
+// Compilador
+// ----------
+//   GNU-GCC TDM-GCC-64   x86_64-w64-mingw32-g++.exe   (Code::Blocks, Windows)
 //
 // Organizacion del codigo fuente
 // ------------------------------
 //   trabajo-practico-1.cpp   bloque principal (este archivo)
-//   utilidades/              constantes, tipos, consola, fechas, validaciones,
-//                            ordenamiento, archivos, muestra de datos y
-//                            operaciones comunes
+//   utilidades/              sistema, constantes, tipos, consola, fechas,
+//                            validaciones, ordenamiento, archivos, muestra de
+//                            datos y operaciones comunes
 //   modulos/                 un archivo por cada modulo Menu_opc()
 //   lib/lib.cpp              ModulosHB.cpp original de la catedra (referencia)
 // ===========================================================================
 
 // ----- Utilidades -----
-#include "utilidades/compatibilidad.hpp"
+#include "utilidades/sistema.hpp"
 #include "utilidades/constantes.hpp"
 #include "utilidades/tipos.hpp"
 #include "utilidades/prototipos.hpp"

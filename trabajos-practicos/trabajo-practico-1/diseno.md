@@ -14,7 +14,7 @@
 | **Grupo Nº** | *(completar)* |
 | **Integrantes** | *(Nº legajo — Apellido, Nombre)* |
 | **Líder del proyecto** | *(completar)* |
-| **Compilador** | GNU-GCC TDM-GCC-64 `x86_64-w64-mingw32-g++.exe` (Windows) · `clang++ -std=c++17` (macOS) |
+| **Compilador** | GNU-GCC TDM-GCC-64 `x86_64-w64-mingw32-g++.exe` (Code::Blocks, Windows) |
 
 ---
 
@@ -25,11 +25,11 @@ trabajo-practico-1/
 ├── trabajo-practico-1.cpp        BLOQUE PRINCIPAL. Sólo incluye y llama al módulo.
 │
 ├── utilidades/                   herramientas transversales
-│   ├── compatibilidad.hpp        todo lo que depende del sistema operativo
+│   ├── sistema.hpp               biblioteca estándar y primitivas de Windows
 │   ├── constantes.hpp            constantes con nombre (dimensiones, colores, tasas)
 │   ├── tipos.hpp                 registros y typedefs de cadenas
 │   ├── prototipos.hpp            cabeceras de todos los módulos
-│   ├── consola.hpp               namespace Screen (versión portable de ModulosHB)
+│   ├── consola.hpp               namespace Screen (ModulosHB sobre la API de Windows)
 │   ├── fechas.hpp                namespace FechaHora (GetDate/GetTime de la cátedra)
 │   ├── validaciones.hpp          namespace Validar (ingreso validado de datos)
 │   ├── ordenamiento.hpp          namespace Ordenar (burbuja, binaria, secuencial…)
@@ -62,9 +62,12 @@ incluye los `.hpp` en el orden correcto. Para la entrega en Code::Blocks basta
 con compilar ese único archivo.
 
 ```
-clang++ -std=c++17 -Wall -Wextra trabajo-practico-1.cpp -o homebanking     (macOS)
-g++     -std=c++17 -Wall -Wextra trabajo-practico-1.cpp -o homebanking.exe (Windows)
+g++ -std=c++17 -Wall -Wextra trabajo-practico-1.cpp -o homebanking.exe
 ```
+
+También se incluye `TP1.cbp`, el proyecto de Code::Blocks: `trabajo-practico-1.cpp`
+es la única unidad de compilación y los `.hpp` figuran en el árbol para poder
+abrirlos, sin compilarse por separado.
 
 ---
 
@@ -361,6 +364,22 @@ llevan encabezados**: contienen solamente los datos, tal como pide el enunciado.
 Que todos los registros ocupen la misma cantidad de bytes es lo que permite el
 **acceso aleatorio**: el registro *n* empieza en el byte `n × largoRegistro`.
 
+En Windows el salto de línea de un archivo de texto es **CR+LF**, dos bytes, de
+modo que el largo *físico* del registro es el de los datos más dos:
+
+| Archivo | Datos | Con CR+LF | Registros en la muestra |
+|---|---:|---:|---:|
+| `MovimientosCA.Txt` | 58 | **60** | 26 |
+| `MovimientosTD.Txt` | 56 | **58** | 17 |
+| `MovimientosTC.Txt` | 71 | **73** | 17 |
+
+Los archivos se abren siempre en **modo binario**. Abrirlos en modo texto haría
+que la biblioteca tradujera CR+LF por LF al leer: las posiciones lógicas
+dejarían de coincidir con las físicas y `seekg()` caería en el registro
+equivocado. El largo no se da por sentado sino que lo determina
+`Archivo::LargoRegistro()` leyendo la primera línea, por lo que un archivo
+guardado con LF solo también funciona.
+
 ### 6.1 `MovimientosCA.Txt` — 58 bytes + salto de línea
 
 ```
@@ -605,7 +624,7 @@ Con la muestra anterior, los saldos que el sistema debe calcular son:
 ```
   Archivo....................: MovimientosCA.Txt
   Cantidad de registros......: 26
-  Largo del registro (bytes).: 59
+  Largo del registro (bytes).: 60
   Su nro. de usuario.........: 3
 
   Nro. de registro a consultar: 3
@@ -760,9 +779,9 @@ la compra con crédito impacta en la Caja de Ahorro *y* en `MovimientosTC.Txt`.
 **Sesión interactiva**
 
 ```
-cd trabajos-practicos/trabajo-practico-1
-clang++ -std=c++17 -Wall -Wextra trabajo-practico-1.cpp -o homebanking
-./homebanking
+cd trabajos-practicos\trabajo-practico-1
+g++ -std=c++17 -Wall -Wextra trabajo-practico-1.cpp -o homebanking.exe
+homebanking.exe
 ```
 
 En consola los menús se recorren con las **flechas ↑ ↓**, se confirma con
@@ -771,7 +790,7 @@ En consola los menús se recorren con las **flechas ↑ ↓**, se confirma con
 **Sesión guionada** (para reproducir siempre la misma corrida)
 
 ```
-printf '30125478\nmalvarez\nSol1983\n\n2\n1\n\n5\n17\nS\nN\n' | ./homebanking
+printf '30125478\nmalvarez\nSol1983\n\n2\n1\n\n6\n17\nS\nN\n' | homebanking.exe
 ```
 
 Cuando la entrada no es una consola, los menús se eligen tecleando el número de
@@ -785,13 +804,13 @@ arma integrando todos los `.hpp` en el orden en que los incluye el bloque
 principal:
 
 ```
-python3 armar-entrega.py "TP1V1_K1023G3_PEREZ JUAN.cpp"
-clang++ -std=c++17 -Wall -Wextra "TP1V1_K1023G3_PEREZ JUAN.cpp" -o entrega
+python armar-entrega.py "TP1V1_K1023G3_PEREZ JUAN.cpp"
+g++ -std=c++17 -Wall -Wextra "TP1V1_K1023G3_PEREZ JUAN.cpp" -o entrega.exe
 ```
 
 Hay que volver a generarlo cada vez que se modifique el código. Se verificó que
-la versión de un solo archivo produce exactamente la misma salida que la
-versión modular en las 19 corridas de prueba.
+la versión de un solo archivo produce exactamente la misma salida —en pantalla
+y en los tres archivos de datos— que la versión modular.
 
 ---
 

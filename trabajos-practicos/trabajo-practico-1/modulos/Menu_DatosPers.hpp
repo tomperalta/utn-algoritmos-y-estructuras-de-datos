@@ -195,8 +195,8 @@ static void DatosPers_ActualizarEmail(DatosPers aDatosPers[], short nroUsu) {
 } // DatosPers_ActualizarEmail
 
 // ---------------------------------------------------------------------------
-// Actualiza el domicilio. Se normaliza a ASCII para que el dato se vea igual
-// en la consola de Windows y en la de macOS.
+// Actualiza el domicilio. Se normaliza a ASCII para que el dato ocupe un byte
+// por caracter y no altere el largo fijo del registro en el archivo.
 // ---------------------------------------------------------------------------
 static void DatosPers_ActualizarDomicilio(DatosPers aDatosPers[],
                                           short nroUsu) {
