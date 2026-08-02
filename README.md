@@ -25,6 +25,12 @@ programación estructurada y modular**, sin memoria dinámica.
 │
 └── trabajos-practicos/
     └── trabajo-practico-1/      TP #1 — Home Banking (registros, arreglos y archivos)
+        ├── trabajo-practico-1.cpp   programa completo, en un único archivo
+        ├── MovimientosCA.Txt        movimientos de la caja de ahorro
+        ├── MovimientosTD.Txt        consumos de la tarjeta de débito
+        ├── MovimientosTC.Txt        consumos de la tarjeta de crédito
+        ├── ListadosHB.Txt           salida emitida con freopen
+        └── lib/lib.cpp              módulos de consola entregados por la cátedra
 ```
 
 Cada parcial está transcripto en Markdown con el enunciado completo y el
@@ -37,12 +43,19 @@ encabezado a completar (curso, día, turno, legajo), tal como se entrega.
 El entorno es el que pide la cátedra: **Code::Blocks** con **TDM-GCC-64**
 (`x86_64-w64-mingw32-g++.exe`) sobre Windows, estándar C++17.
 
-Para el TP1 está el proyecto `TP1.cbp`. El paso a paso —instalar el compilador,
-configurar el IDE, ejecutar y resolver los errores más comunes— está en
-[CODE-BLOCKS.md](trabajos-practicos/trabajo-practico-1/CODE-BLOCKS.md).
+El TP1 usa `windows.h` y `conio.h`, así que **sólo compila y corre en Windows**.
+Se abre el `.cpp` directamente en Code::Blocks y se compila; no hace falta
+crear un proyecto porque es un único archivo.
 
 Desde la terminal:
 
 ```
 g++ -std=c++17 -Wall -Wextra ejercicios/guia-1.cpp -o guia-1.exe
+
+cd trabajos-practicos/trabajo-practico-1
+g++ -std=c++17 -Wall -Wextra trabajo-practico-1.cpp -o TP1.exe
 ```
+
+El TP1 lee y escribe `MovimientosCA.Txt`, `MovimientosTD.Txt`,
+`MovimientosTC.Txt` y `ListadosHB.Txt` en el **directorio desde el que se
+ejecuta**, así que hay que correrlo parado en su carpeta.
