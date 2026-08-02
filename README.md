@@ -29,3 +29,20 @@ programación estructurada y modular**, sin memoria dinámica.
 
 Cada parcial está transcripto en Markdown con el enunciado completo y el
 encabezado a completar (curso, día, turno, legajo), tal como se entrega.
+
+---
+
+## Compilar
+
+El entorno es el que pide la cátedra: **Code::Blocks** con **TDM-GCC-64**
+(`x86_64-w64-mingw32-g++.exe`) sobre Windows, estándar C++17.
+
+Para el TP1 está el proyecto `TP1.cbp`. El paso a paso —instalar el compilador,
+configurar el IDE, ejecutar y resolver los errores más comunes— está en
+[CODE-BLOCKS.md](trabajos-practicos/trabajo-practico-1/CODE-BLOCKS.md).
+
+Desde la terminal:
+
+```
+g++ -std=c++17 -Wall -Wextra ejercicios/guia-1.cpp -o guia-1.exe
+```
